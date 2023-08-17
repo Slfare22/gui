@@ -1,0 +1,32 @@
+-- Roblox Bloxburg Autobuild Script
+
+-- Configuration
+local buildSpeed = 4 -- Adjust the speed of the building process (1 is the default)
+
+-- Variables
+local player = game.Players.LocalPlayer
+local mouse = player:GetMouse()
+local workspace = game.Workspace
+
+-- Main Function
+local function autobuild()
+    while true do
+        wait(0.1)
+
+        -- Check if player is holding a tool
+        if player.Character and player.Character:FindFirstChildWhichIsA("Tool") then
+            local tool = player.Character:FindFirstChildWhichIsA("Tool")
+            
+            -- Check if mouse is hovering over a valid buildable part
+            local part = mouse.Target
+            if part and part.Parent and part.Parent.Name == "Builds" then
+                tool:Activate()
+                part:Activate()
+                wait(buildSpeed)
+            end
+        end
+    end
+end
+
+-- Connect Autobuild to mouse movement
+mouse.Move:Connect(autobuild)
